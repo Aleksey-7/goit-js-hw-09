@@ -26,6 +26,7 @@ function onSubmitForm(e) {
           });
         }, delay);
       });
+
     delay += step;
   }
 }
