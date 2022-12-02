@@ -10,6 +10,11 @@ const refs = {
   seconds: document.querySelector('span[data-seconds]'),
 };
 
+function startButtonDisabled() {
+  refs.startBtn.disabled = true;
+}
+startButtonDisabled();
+
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
@@ -43,7 +48,6 @@ const options = {
   onClose(selectedDates) {
     if (selectedDates[0] < Date.now()) {
       Notify.failure('Please choose a date in the future');
-      selectedDates[0] = new Date();
     }
     if (selectedDates[0] > Date.now()) {
       refs.startBtn.disabled = false;
@@ -57,7 +61,6 @@ class Timer {
     this.intervalId = null;
     this.isActive = false;
     this.onTick = onTick;
-    refs.startBtn.disabled = true;
   }
 
   start() {
@@ -66,8 +69,7 @@ class Timer {
     }
 
     this.isActive = true;
-    refs.startBtn.disabled = true;
-
+    startButtonDisabled();
     this.intervalId = setInterval(() => {
       const currentTime = Date.now();
       const deltaTime = selectedTime - currentTime;
